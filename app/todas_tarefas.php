@@ -1,3 +1,13 @@
+<?php 
+
+    $acao = 'recuperar'; 
+    require "../controller/tarefa_controller.php";
+
+    // echo '<pre>';
+    // print_r($tarefas);
+    // echo '</pre>';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -58,11 +68,12 @@
                 <div class="bg-white p-4 rounded shadow-sm">
                     <h4>Todas as tarefas</h4>
                     <hr>
+                    <?php foreach ($tarefas as $indice => $tarefa) { ?>
 
-                    <!-- Tarefa -->
+                     <!-- Tarefa -->
                     <div class="row mb-3 align-items-center tarefa">
                         <div class="col-md-9">
-                            Lavar o carro <span class="text-muted">(pendente)</span>
+                            <?= $tarefa->tarefa ?><span class="text-muted">(<?= $tarefa->status ?>)</span>
                         </div>
                         <div class="col-md-3 d-flex justify-content-end gap-3 mt-2 mt-md-0">
                             <i class="fa-solid fa-trash text-danger" role="button"></i>
@@ -71,18 +82,8 @@
                         </div>
                     </div>
 
-                    <!-- Tarefa -->
-                    <div class="row mb-3 align-items-center tarefa">
-                        <div class="col-md-9">
-                            Passear com o cachorro <span class="text-muted">(pendente)</span>
-                        </div>
-                        <div class="col-md-3 d-flex justify-content-end gap-3 mt-2 mt-md-0">
-                            <i class="fa-solid fa-trash text-danger" role="button"></i>
-                            <i class="fa-solid fa-pen-to-square text-info" role="button"></i>
-                            <i class="fa-solid fa-check text-success" role="button"></i>
-                        </div>
-                    </div>
-
+                    <?php }?>
+                   
                 </div>
             </main>
 

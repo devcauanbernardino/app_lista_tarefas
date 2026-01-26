@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,16 +11,10 @@
     <link rel="stylesheet" href="../css/estilo.css">
 
     <!-- Bootstrap 5 -->
-    <link 
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
-        rel="stylesheet"
-    >
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Font Awesome 6 -->
-    <link 
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
-        rel="stylesheet"
-    >
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
@@ -33,6 +28,12 @@
             </a>
         </div>
     </nav>
+
+    <?php if (isset($_GET['inclusao']) && $_GET['inclusao'] == '1') { ?>
+        <div class="bg-success pt-2 text-white d-flex justify-content-center align-items-center">
+            <h5>Tarefa inserida com sucesso</h5>
+        </div>
+    <?php } ?>
 
     <!-- Conteúdo -->
     <div class="container app mt-4">
@@ -59,16 +60,11 @@
                     <h4>Nova tarefa</h4>
                     <hr>
 
-                    <form method="post" action="">
+                    <form method="post" action="../controller/tarefa_controller.php?acao=inserir">
                         <div class="mb-3">
                             <label class="form-label">Descrição da tarefa</label>
-                            <input 
-                                type="text" 
-                                name="tarefa"
-                                class="form-control" 
-                                placeholder="Exemplo: Lavar o carro"
-                                required
-                            >
+                            <input type="text" name="tarefa" class="form-control" placeholder="Exemplo: Lavar o carro"
+                                required>
                         </div>
 
                         <button type="submit" class="btn btn-success">
@@ -84,4 +80,5 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
