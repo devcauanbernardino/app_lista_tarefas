@@ -1,30 +1,43 @@
 <?php
-    require "../class/conexao.php";
-    require "../class/tarefa.model.php";
-    require "../class/tarefa.service.php";
+require "../class/conexao.php";
+require "../class/tarefa.model.php";
+require "../class/tarefa.service.php";
 
-    $acao = isset($_GET['acao']) ? $_GET['acao'] : $acao;
+$acao = isset($_GET['acao']) ? $_GET['acao'] : $acao;
 
+if ($acao == 'inserir') {
+    $tarefa = new Tarefa();
+    $tarefa->__set('tarefa', $_POST['tarefa']);
 
-    if ($acao == 'inserir') {
-        $tarefa = new Tarefa();
-        $tarefa->__set('tarefa', $_POST['tarefa']);
-    
-        $conexao = new Conexao();
-    
-        $tarefaService = new TarefaService($conexao, $tarefa);
-        $tarefaService->inserir();
-    
-        header('location: ../app/nova_tarefa.php?inclusao=1');
+    $conexao = new Conexao();
 
-    } else if($acao == 'recuperar') {
-        $tarefa = new Tarefa();
-        $conexao = new Conexao();
+    $tarefaService = new TarefaService($conexao, $tarefa);
+    $tarefaService->inserir();
 
-        $tarefaService = new TarefaService($conexao, $tarefa);
-        $tarefas = $tarefaService->recuperar();
+    header('location: ../app/nova_tarefa.php?inclusao=1');
 
+} else if ($acao == 'recuperar') {
+    $tarefa = new Tarefa();
+    $conexao = new Conexao();
+
+    $tarefaService = new TarefaService($conexao, $tarefa);
+    $tarefas = $tarefaService->recuperar();
+
+} else if ($acao == 'atualizar') {
+    $tarefa = new Tarefa();
+    $tarefa->__set('id', $_POST['id']);
+    $tarefa->__set('tarefa', $_POST['tarefa']);
+
+    $conexao = new Conexao();
+
+    $tarefaService = new TarefaService($conexao, $tarefa);
+
+    if ($tarefaService->atualizar()) {
+        header('location: ../app/todas_tarefas.php');
     }
+
+
+}
 
 
 
