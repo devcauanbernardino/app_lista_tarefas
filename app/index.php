@@ -1,3 +1,13 @@
+<?php 
+
+$acao = 'recuperarTarefasPendentes';
+require "../controller/tarefa_controller.php";
+
+// echo '<pre>';
+// print_r($tarefas);
+// echo '</pre>';
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -59,35 +69,90 @@
                     <h4>Tarefas pendentes</h4>
                     <hr>
 
-                    <!-- Tarefa -->
-                    <div class="row mb-3 align-items-center tarefa">
-                        <div class="col-md-9">
-                            Lavar o carro
-                        </div>
-                        <div class="col-md-3 d-flex justify-content-end gap-3 mt-2 mt-md-0">
-                            <i class="fa-solid fa-trash text-danger" role="button"></i>
-                            <i class="fa-solid fa-pen-to-square text-info" role="button"></i>
-                            <i class="fa-solid fa-check text-success" role="button"></i>
-                        </div>
-                    </div>
+                     <?php foreach ($tarefas as $indice => $tarefa) { ?>
 
-                    <!-- Tarefa -->
-                    <div class="row mb-3 align-items-center tarefa">
-                        <div class="col-md-9">
-                            Passear com o cachorro
+                        <!-- Tarefa -->
+                        <div class="row mb-3 align-items-center tarefa">
+                            <div class="col-md-9" id="tarefa_<?= $tarefa->id ?>">
+                                <?= $tarefa->tarefa ?><span class="text-muted"></span>
+                            </div>
+                            <div class="col-md-3 d-flex justify-content-end gap-3 mt-2 mt-md-0">
+                                <i class="fa-solid fa-trash text-danger" role="button" onclick="remover(<?= $tarefa->id ?>)"></i>
+                                <i class="fa-solid fa-pen-to-square text-info" role="button" onclick="editar(<?= $tarefa->id ?>,  '<?= $tarefa->tarefa ?>')"></i>
+                                <i class="fa-solid fa-check text-success" role="button" onclick="marcarRealizada(<?= $tarefa->id ?>)"></i>
+                            </div>
                         </div>
-                        <div class="col-md-3 d-flex justify-content-end gap-3 mt-2 mt-md-0">
-                            <i class="fa-solid fa-trash text-danger" role="button"></i>
-                            <i class="fa-solid fa-pen-to-square text-info" role="button"></i>
-                            <i class="fa-solid fa-check text-success" role="button"></i>
-                        </div>
-                    </div>
+
+                    <?php } ?>
 
                 </div>
             </main>
 
         </div>
     </div>
+
+     <script>
+        function editar(id, txt_tarefa) {
+            //criar um form de edicao
+            let form = document.createElement('form');
+            form.action = 'index.php?pag=index&acao=atualizar'
+            form.method = 'post'
+            form.classList = 'row'
+
+
+            //criar um input para entrada do texto
+            let inputTarefa = document.createElement('input');
+            inputTarefa.type = 'text';
+            inputTarefa.name = 'tarefa';
+            inputTarefa.classList = 'col-6 form-control'
+            inputTarefa.value = txt_tarefa
+
+
+            //criar um input hidden para guardar o id da tarefa
+            let inputId = document.createElement('input');
+            inputId.type = 'hidden';
+            inputId.name = 'id';
+            inputId.value = id
+
+            //criar um button para envio do form
+            let button = document.createElement('button');
+            button.type = 'submit'
+            button.classList = 'col-2 btn btn-info text-center'
+            button.innerHTML = 'Atualizar'
+
+            //incluir inputTarefa no form
+            form.appendChild(inputTarefa);
+
+            //incluir o inputId no form
+            form.appendChild(inputId);
+
+            //incluir button no form
+            form.appendChild(button);
+
+            // console.log(form)
+
+            //selecionar a div tarefa
+            let tarefa = document.getElementById('tarefa_' + id);
+
+            //limpar o texto da tarefa para inclusao do form
+            tarefa.innerHTML = '';
+
+            //incluir o form na div tarefa
+            tarefa.insertBefore(form, tarefa[0]);
+   
+        }
+
+        function remover(id) {
+            location.href = 'index.php?pag=index&acao=remover&id=' + id
+
+        }
+
+        function marcarRealizada(id) {
+            location.href = 'index.php?pag=index&acao=marcarRealizada&id=' + id
+
+        }
+
+    </script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

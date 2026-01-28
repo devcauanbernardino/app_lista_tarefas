@@ -14,6 +14,7 @@ class Tarefa {
     //Metodo magico para atribuir um novo valor para o atributo
     public function __set($atributo, $valor) {
         $this->$atributo = $valor;
+        return $this;
     }
 }
 

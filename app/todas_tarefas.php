@@ -71,9 +71,12 @@ require "../controller/tarefa_controller.php";
                                 <?= $tarefa->tarefa ?><span class="text-muted">(<?= $tarefa->status ?>)</span>
                             </div>
                             <div class="col-md-3 d-flex justify-content-end gap-3 mt-2 mt-md-0">
-                                <i class="fa-solid fa-trash text-danger" role="button"></i>
+                                <i class="fa-solid fa-trash text-danger" role="button" onclick="remover(<?= $tarefa->id ?>)"></i>
+
+                                <?php if($tarefa->status == 'pendente') { ?>
                                 <i class="fa-solid fa-pen-to-square text-info" role="button" onclick="editar(<?= $tarefa->id ?>,  '<?= $tarefa->tarefa ?>')"></i>
-                                <i class="fa-solid fa-check text-success" role="button"></i>
+                                <i class="fa-solid fa-check text-success" role="button" onclick="marcarRealizada(<?= $tarefa->id ?>)"></i>
+                                <?php }?>
                             </div>
                         </div>
 
@@ -132,13 +135,18 @@ require "../controller/tarefa_controller.php";
 
             //incluir o form na div tarefa
             tarefa.insertBefore(form, tarefa[0]);
-
-            
+   
         }
 
+        function remover(id) {
+            location.href = 'todas_tarefas.php?acao=remover&id=' + id
 
+        }
 
+        function marcarRealizada(id) {
+            location.href = 'todas_tarefas.php?acao=marcarRealizada&id=' + id
 
+        }
 
     </script>
 
